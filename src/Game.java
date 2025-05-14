@@ -8,7 +8,7 @@ public class Game {
     int difficulty;
 
 
-   public Game() {
+    public Game() {
         Assets.printTitle();
         scan = new Scanner(System.in).useLocale(Locale.US);
         System.out.println("Choose your difficulty");
@@ -53,7 +53,7 @@ public class Game {
                 scan.nextLine();
                 if(scan.nextLine().equals("c")){
                     charSelected = true;
-                    board.initPlayer("Yeŋiçeri", difficulty);
+                    board.initPlayer("Yeŋiçeri");
                 }else{
                     System.out.println("\n\nChoose your character");
                     System.out.println("1. Süvari (Cavalry)");
@@ -71,7 +71,7 @@ public class Game {
                 scan.nextLine();
                 if(scan.nextLine().equals("c")){
                     charSelected = true;
-                    board.initPlayer("Süvari", difficulty);
+                    board.initPlayer("Süvari");
                 }else{
                     System.out.println("\n\nChoose your character");
                     System.out.println("1. Süvari (Cavalry)");
@@ -88,7 +88,7 @@ public class Game {
                 System.out.println("Type 'c' to confirm");
                 scan.nextLine();
                 if(scan.nextLine().equals("c")){
-                    board.initPlayer("Topçu", difficulty);
+                    board.initPlayer("Topçu");
                     charSelected = true;
                 }else{
                     System.out.println("\n\nChoose your character");
@@ -98,6 +98,7 @@ public class Game {
                 }
             }
         }
+        board.printBoard();
     }
 
     public void Run(){
@@ -107,6 +108,6 @@ public class Game {
     }
 
     public void Turn(){
-        //have player make move through board, then have greeks make their moves
+        // have player make move through board, then have greeks make their moves
     }
 }

@@ -1,7 +1,7 @@
 public class Assets {
     static public void printTitle(){
         System.out.println("                    ████████  ██                          ███████             ████     ████                          █████                   ");
-        System.out.println("                       ██     ██          ███              ██        █████      ██       ██                          ██   █                   ");
+        System.out.println("                       ██     ██          ███              ██        █████      ██       ██                          ██   ██                   ");
         System.out.println("                       ██     █████     ██   ██            ██████        ██     ██       ██                █████   ████                   ");
         System.out.println("                       ██     ██   ██   ███████            ██       ███████     ██       ██               ██   ██    ██                      ");
         System.out.println("                       ██     ██   ██   ██                 ██       ██   ██     ██       ██               ██   ██    ██                      ");
