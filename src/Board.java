@@ -1,4 +1,5 @@
 import java.lang.Math;
+import java.util.ArrayList;
 
 
 
@@ -6,7 +7,7 @@ public class Board {
     private int[][] board;
     private Player p;
     private int difficulty;
-    
+    private ArrayList<Enemy> enemies;
 
     static int Player = 0b100;
     static int Enemy = 0b110;
@@ -16,14 +17,29 @@ public class Board {
     public Board(int size, int difficulty) {
         board = new int[size][size];
         this.difficulty = difficulty;
-        
-        for(int x = 1; x < size; x++){
-            for(int y = 1; y < size; y++){
+        int maxEnemies = difficulty * 3;
+        for(int x = 0; x < size; x++){
+            for(int y = 0; y < size; y++){
                 if(Math.random() < 0.1){
                     board[x][y] = randomUpgrade();
                 }
             }
         }
+        int numEnemies = 0;
+        
+        while(numEnemies <= maxEnemies){
+            for(int x = 0; x < size; x++){
+                for(int y = 0; y < size; y++){
+                    if(Math.random() < 0.01){
+                        board[x][y] = Board.Enemy;
+                        numEnemies++;
+                    }
+                }
+            }
+        }
+        
+
+        
     }
 
     public static String booleanToString(boolean val){
@@ -68,7 +84,7 @@ public class Board {
         int upgrade = 0;
 
         while(upgrade > 0){
-            if(Math.random() < 0.50){
+            if(Math.random() < 0.33){
                 upgradeSpeed = true;
             }
 
