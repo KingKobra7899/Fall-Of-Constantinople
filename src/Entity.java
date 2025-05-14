@@ -11,4 +11,9 @@ public class Entity {
         this.position = position;
         this.health = health;
     }
+
+    public void setPosition(int x, int y){
+        position[0] = x;
+        position[1] = y;
+    }
 }
