@@ -19,7 +19,7 @@ public class Move {
     }
 
     public int getDY(){
-        return dX;
+        return dY;
     }
 
     public boolean getIsShoot(){
@@ -31,6 +31,18 @@ public class Move {
     }
 
     public String toString(){
-        return "Dx: " + dX +", Dy: " + dY;
+        if(dX == 0){
+            if(dY > 0){
+                return "S" + dY;
+            }else{
+                return "N" + Math.abs(dY);
+            }
+        }else{
+            if(dX > 0){
+                return "E" + dX;
+            }else{
+                return "W" + Math.abs(dX);
+            }
+        }
     }
 }

@@ -100,6 +100,7 @@ public class Game {
                 }
             }
         }
+        System.out.println("When making a move, do so on the format (Direction Distance) like (E4, N2, S1, or W4)");
         board.printBoard();
     }
 
@@ -115,35 +116,19 @@ public class Game {
         boolean isShoot = scan.nextInt() == 1;
         ArrayList<Move> moves = board.getEntityMoves(board.getPlayer());
         if(!isShoot){
+            System.out.println("Type your move");
             boolean validMove = false;
             while(!validMove){
-            System.out.println("You can move a maximum of " + (int) board.getPlayer().getSpeed() + " tiles");
-            System.out.println("Would you like to move up/down (1) or side-to-side? (2)");
-            int axis = scan.nextInt();
-            System.out.println("How many tiles would you like to move?");
-            int d = scan.nextInt();
-
-            if(axis == 2){
-                for(Move move: moves){
-                    if(!move.isShoot && move.dX == d){
+                scan.nextLine();
+                String candidate = scan.nextLine();
+                for(Move m: moves){
+                    if(!m.isShoot && m.toString().equals(candidate)){
+                        board.applyMove(m, true);
                         validMove = true;
-                        board.applyMove(move, true);
-                        System.out.println("Succesful Move");
-                        break;
-                    }
-                }
-            }else{
-                for(Move move: moves){
-                    if(!move.isShoot && move.dY == d){
-                        validMove = true;
-                        board.applyMove(move, true);
-                        System.out.println("Succesful Move");
                         break;
                     }
                 }
             }
-            
         }
-    }
     }
 }

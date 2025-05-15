@@ -122,29 +122,25 @@ public class Board {
     }
 
     public void printBoard(){
-        for(int y = 0; y < board[0].length; y++){
-            for(int x = 0; x < board.length; x++){
-                int square = getAtPos(x, y);
-                
-                if(square == 0){
-                   System.out.print("|¯");
+        for(int i = 0; i < board.length; i++){
+            System.out.print(" _");
+        }
+        System.out.println("");
+        for(int y = 0; y < board.length; y++){
+            System.out.print("|");
+            for(int x = 0; x < board[0].length; x++){
+                int val = getAtPos(x, y);
+                if(val == Board.Player){
+                    System.out.print("█|");
+                }else if(val == Board.Enemy){
+                    System.out.print("E|");
+                }else if(val == Board.Upgrade){
+                    System.out.print("U|");
                 }else{
-                    if(square == Board.Player){
-                        System.out.print("|P");
-                    }else if(square == Board.Upgrade){
-                        System.out.print("|U");
-                    }else if(square == Board.Enemy){
-                        System.out.print("|E");
-                    }else{
-                        System.out.print("|X");
-                    }
+                    System.out.print("_|");
                 }
             }
-            System.out.println("|");
-        }
-
-        for(int i = 0; i < board.length; i++){
-            System.out.print(" ¯");
+            System.out.println("");
         }
     }
 
@@ -161,13 +157,12 @@ public class Board {
                 int x = currentPos[0];
                 int y = currentPos[1];
                 board[x][y] = 0;
+                System.out.println(x + " + " + m.getDX());
+                System.out.println(y + " + " + m.getDY());
                 x += m.getDX();
                 y += m.getDY();
 
-                x = Math.min(board.length - 1, x);
-                y = Math.min(board.length - 1, y);
-                x = Math.max(0, y);
-                x = Math.max(0, x);
+                
 
                 board[x][y] = Board.Player;
                 p.setPosition(x, y);
@@ -202,7 +197,6 @@ public class Board {
         int speed = (int) e.getSpeed();
     
         // LEFT
-        
         for (int dx = -1; dx >= -speed; dx--) {
             int x = currentX + dx;
             int val = getAtPos(x, currentY);
