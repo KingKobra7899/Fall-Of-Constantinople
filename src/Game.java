@@ -48,7 +48,7 @@ public class Game {
                 Assets.printInfrantry();
                 System.out.println("____________________");
                 System.out.println("|Speed    |███     |");
-                System.out.println("|Range    |██      |");
+                System.out.println("|Range    |███     |");
                 System.out.println("|Strength |██      |");
                 System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
                 System.out.println("Type 'c' to confirm");
@@ -65,7 +65,7 @@ public class Game {
             }else if(type == 1){
                 Assets.printCavalry();
                 System.out.println("____________________");
-                System.out.println("|Speed    |████    |");
+                System.out.println("|Speed    |█████   |");
                 System.out.println("|Range    |██      |");
                 System.out.println("|Strength |█       |");
                 System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
@@ -83,7 +83,7 @@ public class Game {
             }else if(type == 2){
                 Assets.printCannon();
                 System.out.println("____________________");
-                System.out.println("|Speed    |█       |");
+                System.out.println("|Speed    |██      |");
                 System.out.println("|Range    |███     |");
                 System.out.println("|Strength |███     |");
                 System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
@@ -123,24 +123,22 @@ public class Game {
             System.out.println("How many tiles would you like to move?");
             int d = scan.nextInt();
 
-            if(axis == 1){
+            if(axis == 2){
                 for(Move move: moves){
-                    if(!move.isShoot){
-                        if(move.dX == d){
-                            validMove = true;
-                            board.applyMove(move);
-                            break;
-                        }
+                    if(!move.isShoot && move.dX == d){
+                        validMove = true;
+                        board.applyMove(move, true);
+                        System.out.println("Succesful Move");
+                        break;
                     }
                 }
             }else{
                 for(Move move: moves){
-                    if(!move.isShoot){
-                        if(move.dY == d){
-                            validMove = true;
-                            board.applyMove(move);
-                            break;
-                        }
+                    if(!move.isShoot && move.dY == d){
+                        validMove = true;
+                        board.applyMove(move, true);
+                        System.out.println("Succesful Move");
+                        break;
                     }
                 }
             }

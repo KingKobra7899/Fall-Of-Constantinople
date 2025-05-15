@@ -9,16 +9,16 @@ public class Player extends Entity {
         int[] pos = new int[2];
 
         if(type.equals("Süvari")){
-            speed = 4 - diff_penalty;
+            speed = 5 - diff_penalty;
             range = 2 - diff_penalty;
             strength = 1 - diff_penalty;
         }else if(type.equals("Topçu")){
-            speed = 1 - diff_penalty;
+            speed = 2 - diff_penalty;
             range = 3 - diff_penalty;
             strength = 3 - diff_penalty;
         }else if(type.equals("Yeŋiçeri")){
             speed = 3 - diff_penalty;
-            range = 2 - diff_penalty;
+            range = 3 - diff_penalty;
             strength = 2 - diff_penalty;
         }
 

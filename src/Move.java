@@ -29,4 +29,8 @@ public class Move {
     public boolean equals(Move m){
         return m.getIsShoot() == isShoot && m.getDX() == dX && m.getDY() == dY && entity.getId() == m.getEntity().getId();
     }
+
+    public String toString(){
+        return "Dx: " + dX +", Dy: " + dY;
+    }
 }
