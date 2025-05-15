@@ -170,12 +170,33 @@ public class Board {
         }else{
             for(int i = 0; i < enemies.size(); i++){
                 Enemy e = enemies.get(i);
-                
                 if(e.getId() == id){
                     if(m.getIsShoot()){
-                        /*
-                         * TODO IMPLEMENT SHOOTING LOGIC
-                        */
+                        if(m.getDX() == 0){
+                            if(m.getDY() > 0){
+                                for(int n = 0; n < m.getDY(); n++){
+                                    int y = e.getPosition()[1] + 1 + n;
+                                    board[e.getPosition()[0]][y] = Board.Wall;
+                                }
+                            }else{
+                                for(int n = 0; n > m.getDY(); n--){
+                                    int y = e.getPosition()[1] + 1 + n;
+                                    board[e.getPosition()[0]][y] = Board.Wall;
+                                }
+                            }
+                        }else{
+                            if(m.getDX() > 0){
+                                for(int n = 0; n < m.getDY(); n++){
+                                    int x = e.getPosition()[0] + 1 + n;
+                                    board[x][e.getPosition()[1]] = Board.Wall;
+                                }
+                            }else{
+                                for(int n = 0; n > m.getDX(); n--){
+                                    int x = e.getPosition()[0] + 1 + n;
+                                    board[x][e.getPosition()[1]] = Board.Wall;
+                                }
+                            }
+                        }
                     }else{
                         int[] currentPos = p.getPosition();
                         board[currentPos[0]][currentPos[1]] = 0;
