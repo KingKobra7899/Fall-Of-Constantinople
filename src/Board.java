@@ -13,6 +13,8 @@ public class Board {
     static int Enemy = 0b110;
     static int Wall = 0b101; // last three digits correspond to strergth of wall (001 is 1) (010 is 2) (011 is 3), etc
     static int Upgrade = 0b111; // last three correspond to what the upgrade upgrades (100  for speed) (010 for range), (001 for strength) any combination
+    
+    public Player getPlayer(){return this.p;}
 
     public Board(int size, int difficulty) {
         board = new int[size][size];
@@ -141,5 +143,64 @@ public class Board {
         for(int i = 0; i < board.length; i++){
             System.out.print(" ¯");
         }
+    }
+
+    public void applyMove(Move m){
+        int id = m.getEntity().getId();
+        if(id == p.getId()){
+            if(m.getIsShoot()){
+                /*
+                 * TODO IMPLEMENT SHOOTING LOGIC
+                 */
+            }else{
+                int[] currentPos = p.getPosition();
+                board[currentPos[0]][currentPos[1]] = 0;
+                currentPos[0] += m.getDX();
+                currentPos[1] += m.getDY();
+                board[currentPos[0]][currentPos[1]] = Board.Player;
+                p.setPosition(currentPos[0], currentPos[1]);
+            }
+        }else{
+            for(int i = 0; i < enemies.size(); i++){
+                Enemy e = enemies.get(i);
+                
+                if(e.getId() == id){
+                    if(m.getIsShoot()){
+                        /*
+                         * TODO IMPLEMENT SHOOTING LOGIC
+                        */
+                    }else{
+                        int[] currentPos = p.getPosition();
+                        board[currentPos[0]][currentPos[1]] = 0;
+                        currentPos[0] += m.getDX();
+                        currentPos[1] += m.getDY();
+                        board[currentPos[0]][currentPos[1]] = Board.Player;
+                        p.setPosition(currentPos[0], currentPos[1]);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    public ArrayList<Move> getEntityMoves(Entity e){
+        ArrayList<Move> moves = new ArrayList<Move>();
+        int currentX = e.getPosition()[0];
+        int currentY = e.getPosition()[1];
+        
+        for(int x = 0; x > (int) e.getSpeed(); x--){
+            if(board[currentX + x][currentY] != 0){
+                break;
+            }
+            moves.add(new Move(e, x, 0, false));
+        }
+        for(int x = 0; x < e.getSpeed(); x++){
+            if(board[currentX + x][currentY] != 0){
+                break;
+            }
+            moves.add(new Move(e, x, 0, false));
+        }
+
+        return moves;
     }
 }

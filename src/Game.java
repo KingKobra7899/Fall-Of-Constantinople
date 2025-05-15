@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
+
 public class Game {
     Board board;
     Scanner scan;
@@ -104,10 +106,46 @@ public class Game {
     public void Run(){
         while(!gameOver){
             Turn();
+            board.printBoard();
         }
     }
 
     public void Turn(){
-        // have player make move through board, then have greeks make their moves
+        System.out.println("\nShoot (1) or Move (2)?");
+        boolean isShoot = scan.nextInt() == 1;
+        ArrayList<Move> moves = board.getEntityMoves(board.getPlayer());
+        if(!isShoot){
+            boolean validMove = false;
+            while(!validMove){
+            System.out.println("You can move a maximum of " + (int) board.getPlayer().getSpeed() + " tiles");
+            System.out.println("Would you like to move up/down (1) or side-to-side? (2)");
+            int axis = scan.nextInt();
+            System.out.println("How many tiles would you like to move?");
+            int d = scan.nextInt();
+
+            if(axis == 1){
+                for(Move move: moves){
+                    if(!move.isShoot){
+                        if(move.dX == d){
+                            validMove = true;
+                            board.applyMove(move);
+                            break;
+                        }
+                    }
+                }
+            }else{
+                for(Move move: moves){
+                    if(!move.isShoot){
+                        if(move.dY == d){
+                            validMove = true;
+                            board.applyMove(move);
+                            break;
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
     }
 }
