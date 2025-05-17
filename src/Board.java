@@ -188,7 +188,7 @@ public class Board {
                                 }
                             }else{
                                 for(int n = 0; n > m.getDY(); n--){
-                                    int y = e.getPosition()[1] + 1 + n;
+                                    int y = e.getPosition()[1] - 1 + n;
                                     board[e.getPosition()[0]][y] = Board.Wall;
                                 }
                             }
@@ -304,5 +304,12 @@ public class Board {
     
     public ArrayList<Enemy> getEnemies(){
         return enemies;
+    }
+
+    public int evaluateBoard(){
+        int playerMoves = getEntityMoves(p).size();
+        int[] playerLoc = p.getPosition();
+        int playerDist = (int) Math.sqrt(Math.pow(playerLoc[1], 2) );
+        return 0;
     }
 }

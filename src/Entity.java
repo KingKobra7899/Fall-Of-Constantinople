@@ -44,9 +44,64 @@ public class Entity {
         return new Move(this, dX, dY, isShoot);
     }
 
+    public void print(){
+        System.out.println("____________________");
+        System.out.println("|Speed    |█████   |"); //10
+        System.out.println("|Range    |██      |");//10
+        System.out.println("|Strength |█       |");//10
+        System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
+
+        int maxScore = (int) Math.round(Math.max(speed, range));
+        maxScore = (int) Math.round(Math.max(maxScore, strength));
+        for(int i = 0; i < 14 + maxScore; i++){
+            System.out.print("_");
+        }
+        System.out.println("");
+        for(int i = 0; i < 3; i++){
+            if(i == 0){
+                System.out.print("|Speed    |");
+            }else if(i == 1){
+                System.out.print("|Range    |");
+            }else{
+                System.out.print("|Strength |");
+            }
+            for(int n = 0; n <= maxScore; n++){
+                if(i == 0){
+                    if( n <= speed){
+                        System.out.print("█");
+                    }else if(n == maxScore){
+                        System.out.print("|");
+                    }else{
+                        System.out.print(" ");
+                    }
+                }else if(i == 1){
+                    if( n <= range){
+                        System.out.print("█");
+                    }else if(n == maxScore){
+                        System.out.print("|");
+                    }else{
+                        System.out.print(" ");
+                    }
+                }else{
+                    if( n <= strength){
+                        System.out.print("█");
+                    }else if(n == maxScore){
+                        System.out.print("|");
+                    }else{
+                        System.out.print(" ");
+                    }
+                }
+            }
+            System.out.println("");
+        }
+        for(int i = 0; i < 14 + maxScore; i++){
+            System.out.print("¯");
+        }
+    }
+
     public void absorbUpgrade(int upgrade){
         //takes in last three bits and applies upgrades accordingly
-
+        print();
         if(upgrade % 2 == 0){
             speed++;
         }
@@ -58,5 +113,6 @@ public class Entity {
         if(upgrade % 2 == 0){
             strength++;
         }
+        print();
     }
 }

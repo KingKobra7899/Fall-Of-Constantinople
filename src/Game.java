@@ -111,15 +111,35 @@ public class Game {
         }
     }
 
-    public void Turn(){
-        System.out.println("\nShoot (1) or Move (2)?");
-        boolean isShoot = scan.nextInt() == 1;
+    public void playerTurn(){
+        System.out.println("\nShoot (1) or Move (2)");
         ArrayList<Move> moves = board.getEntityMoves(board.getPlayer());
-        if(!isShoot){
+        int choice = scan.nextInt();
+        
+        if(choice == 2){
             System.out.println("Type your move");
             boolean validMove = false;
-            while(!validMove){
-                scan.nextLine();
+            String candidate = scan.nextLine();
+            for(Move m: moves){
+                    if(!m.isShoot && m.toString().equals(candidate)){
+                        board.applyMove(m, true);
+                        validMove = true;
+                        break;
+                }
+            }
+            if(!validMove){
+                playerTurn();
+            }
+        }
+    }
+
+    public void Turn(){
+        System.out.println("\nShoot (1) or Move (2) or View Stats (3)?");
+        ArrayList<Move> moves = board.getEntityMoves(board.getPlayer());
+        int choice = scan.nextInt();
+        if(choice == 2){
+            System.out.println("Type your move");
+            boolean validMove = false;
                 String candidate = scan.nextLine();
                 for(Move m: moves){
                     if(!m.isShoot && m.toString().equals(candidate)){
@@ -127,10 +147,16 @@ public class Game {
                         validMove = true;
                         break;
                     }
+                if(!validMove){
+                    playerTurn();
                 }
             }
+        }else if(choice == 1){
+           
+        }else if(choice == 3){
+            board.getPlayer().print();
+            playerTurn();
         }
-
         for(Enemy e: board.getEnemies()){
             board.applyMove(e.chooseMove(board), false);
         }
