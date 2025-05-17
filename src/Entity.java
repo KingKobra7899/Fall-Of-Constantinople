@@ -45,15 +45,9 @@ public class Entity {
     }
 
     public void print(){
-        System.out.println("____________________");
-        System.out.println("|Speed    |█████   |"); //10
-        System.out.println("|Range    |██      |");//10
-        System.out.println("|Strength |█       |");//10
-        System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
-
         int maxScore = (int) Math.round(Math.max(speed, range));
         maxScore = (int) Math.round(Math.max(maxScore, strength));
-        for(int i = 0; i < 14 + maxScore; i++){
+        for(int i = 0; i < 12 + maxScore; i++){
             System.out.print("_");
         }
         System.out.println("");
@@ -94,7 +88,7 @@ public class Entity {
             }
             System.out.println("");
         }
-        for(int i = 0; i < 14 + maxScore; i++){
+        for(int i = 0; i < 12 + maxScore; i++){
             System.out.print("¯");
         }
     }
