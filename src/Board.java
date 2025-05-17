@@ -264,7 +264,7 @@ public class Board {
             if (val == Board.Upgrade) break;
         }
         //shots cant go through upgrades
-        for (int dx = -1; dx >= -range; dx--) {
+        for (int dx = -1; dx > -range; dx--) {
             int x = currentX + dx;
             int val = getAtPos(x, currentY);
             if (val == -1 || (val != 0)) break;
@@ -273,7 +273,7 @@ public class Board {
         }
     
         // RIGHT
-        for (int dx = 1; dx <= range; dx++) {
+        for (int dx = 1; dx < range; dx++) {
             int x = currentX + dx;
             int val = getAtPos(x, currentY);
             if (val == -1 || (val != 0)) break;
@@ -282,7 +282,7 @@ public class Board {
         }
     
         // UP
-        for (int dy = -1; dy >= -range; dy--) {
+        for (int dy = -1; dy > -range; dy--) {
             int y = currentY + dy;
             int val = getAtPos(currentX, y);
             if (val == -1 || (val != 0)) break;
@@ -291,7 +291,7 @@ public class Board {
         }
     
         // DOWN
-        for (int dy = 1; dy <= range; dy++) {
+        for (int dy = 1; dy < range; dy++) {
             int y = currentY + dy;
             int val = getAtPos(currentX, y);
             if (val == -1 || (val != 0)) break;
