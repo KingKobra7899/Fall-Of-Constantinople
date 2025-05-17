@@ -130,5 +130,9 @@ public class Game {
                 }
             }
         }
+
+        for(Enemy e: board.getEnemies()){
+            board.applyMove(e.chooseMove(board), false);
+        }
     }
 }

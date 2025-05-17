@@ -22,6 +22,6 @@ public class Player extends Entity {
             strength = 2 - diff_penalty;
         }
 
-        super(speed, range, strength, 5 - diff_penalty, pos);
+        super(speed, range, strength, pos);
     }
 }

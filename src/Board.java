@@ -28,12 +28,15 @@ public class Board {
             }
         }
         int numEnemies = 0;
-        
+        enemies = new ArrayList<Enemy>();
         while(numEnemies <= maxEnemies){
             for(int x = 0; x < size; x++){
                 for(int y = 0; y < size; y++){
                     if(Math.random() < 0.01){
                         board[x][y] = Board.Enemy;
+                        Enemy e = new Enemy();
+                        e.setPosition(x, y);
+                        enemies.add(e);
                         numEnemies++;
                     }
                 }
@@ -131,11 +134,14 @@ public class Board {
             for(int x = 0; x < board[0].length; x++){
                 int val = getAtPos(x, y);
                 if(val == Board.Player){
-                    System.out.print("█|");
+                    System.out.print("☺|");
                 }else if(val == Board.Enemy){
                     System.out.print("E|");
                 }else if(val == Board.Upgrade){
                     System.out.print("U|");
+                }else if(val == Board.Wall){
+                    int str = board[x][y] >> 3;
+                    System.out.print("█|");
                 }else{
                     System.out.print("_|");
                 }
@@ -153,17 +159,19 @@ public class Board {
                  * TODO IMPLEMENT SHOOTING LOGIC
                  */
             }else{
+                
+                
                 int[] currentPos = p.getPosition();
                 int x = currentPos[0];
                 int y = currentPos[1];
+                if(getAtPos(x, y) == Board.Upgrade){
+                    p.absorbUpgrade(board[x][y] >> 3);
+                }
                 board[x][y] = 0;
                 System.out.println(x + " + " + m.getDX());
                 System.out.println(y + " + " + m.getDY());
                 x += m.getDX();
                 y += m.getDY();
-
-                
-
                 board[x][y] = Board.Player;
                 p.setPosition(x, y);
             }
@@ -186,24 +194,27 @@ public class Board {
                             }
                         }else{
                             if(m.getDX() > 0){
-                                for(int n = 0; n < m.getDY(); n++){
+                                for(int n = 0; n < m.getDX(); n++){
                                     int x = e.getPosition()[0] + 1 + n;
                                     board[x][e.getPosition()[1]] = Board.Wall;
                                 }
                             }else{
                                 for(int n = 0; n > m.getDX(); n--){
                                     int x = e.getPosition()[0] + 1 + n;
-                                    board[x][e.getPosition()[1]] = Board.Wall;
+                                    board[x][e.getPosition()[1]] = Board.Wall << 3 | e.getStrength();
                                 }
                             }
                         }
                     }else{
-                        int[] currentPos = p.getPosition();
+                        int[] currentPos = e.getPosition();
                         board[currentPos[0]][currentPos[1]] = 0;
+                        if(getAtPos(currentPos[0], currentPos[1]) == Board.Upgrade){
+                            p.absorbUpgrade(board[currentPos[0]][currentPos[1]] >> 3);
+                        }
                         currentPos[0] += m.getDX();
                         currentPos[1] += m.getDY();
-                        board[currentPos[0]][currentPos[1]] = Board.Player;
-                        p.setPosition(currentPos[0], currentPos[1]);
+                        board[currentPos[0]][currentPos[1]] = Board.Enemy;
+                        e.setPosition(currentPos[0], currentPos[1]);
                     }
                     break;
                 }
@@ -216,7 +227,7 @@ public class Board {
         int currentX = e.getPosition()[0];
         int currentY = e.getPosition()[1];
         int speed = (int) e.getSpeed();
-    
+        int range = (int) e.getRange();
         // LEFT
         for (int dx = -1; dx >= -speed; dx--) {
             int x = currentX + dx;
@@ -252,8 +263,46 @@ public class Board {
             moves.add(new Move(e, 0, dy, false));
             if (val == Board.Upgrade) break;
         }
+        //shots cant go through upgrades
+        for (int dx = -1; dx >= -range; dx--) {
+            int x = currentX + dx;
+            int val = getAtPos(x, currentY);
+            if (val == -1 || (val != 0)) break;
+            moves.add(new Move(e, dx, 0, true));
+            if (val == Board.Upgrade) break; 
+        }
+    
+        // RIGHT
+        for (int dx = 1; dx <= range; dx++) {
+            int x = currentX + dx;
+            int val = getAtPos(x, currentY);
+            if (val == -1 || (val != 0)) break;
+            moves.add(new Move(e, dx, 0, true));
+            if (val == Board.Upgrade) break;
+        }
+    
+        // UP
+        for (int dy = -1; dy >= -range; dy--) {
+            int y = currentY + dy;
+            int val = getAtPos(currentX, y);
+            if (val == -1 || (val != 0)) break;
+            moves.add(new Move(e, 0, dy, true));
+            if (val == Board.Upgrade) break;
+        }
+    
+        // DOWN
+        for (int dy = 1; dy <= range; dy++) {
+            int y = currentY + dy;
+            int val = getAtPos(currentX, y);
+            if (val == -1 || (val != 0)) break;
+            moves.add(new Move(e, 0, dy, true));
+            if (val == Board.Upgrade) break;
+        }
     
         return moves;
     }
     
+    public ArrayList<Enemy> getEnemies(){
+        return enemies;
+    }
 }

@@ -3,16 +3,14 @@ public class Entity {
     private double range;
     private double strength;
     private int[] position;
-    private double health;
     static int numEntities = 0;
     private int id;
 
-    public Entity(double speed, double range, double strength, double health, int[] position) {
+    public Entity(double speed, double range, double strength, int[] position) {
         this.speed = speed;
         this.range = range;
         this.strength = strength;
         this.position = position;
-        this.health = health;
         id = numEntities;
         numEntities++;
     }
@@ -38,7 +36,27 @@ public class Entity {
         return this.range;
     }
 
+    public int getStrength(){
+        return (int) (strength + 0.5);
+    }
+
     public Move createMove(boolean isShoot, int dX, int dY){
         return new Move(this, dX, dY, isShoot);
+    }
+
+    public void absorbUpgrade(int upgrade){
+        //takes in last three bits and applies upgrades accordingly
+
+        if(upgrade % 2 == 0){
+            speed++;
+        }
+        upgrade /= 2;
+        if(upgrade % 2 == 0){
+            range++;
+        }
+        upgrade /= 2;
+        if(upgrade % 2 == 0){
+            strength++;
+        }
     }
 }
