@@ -15,6 +15,31 @@ public class Entity {
         numEntities++;
     }
 
+    public Entity(String type, int difficulty){ //constructor for player
+        double diff_penalty = ((difficulty-1) / 10.0);
+        speed = 0;
+        range = 0;
+        strength = 0;
+
+        position = new int[2];
+
+        if(type.equals("Süvari")){
+            speed = 5 - diff_penalty;
+            range = 2 - diff_penalty;
+            strength = 1 - diff_penalty;
+        }else if(type.equals("Topçu")){
+            speed = 2 - diff_penalty;
+            range = 3 - diff_penalty;
+            strength = 3 - diff_penalty;
+        }else if(type.equals("Yeŋiçeri")){
+            speed = 3 - diff_penalty;
+            range = 3 - diff_penalty;
+            strength = 2 - diff_penalty;
+        }
+        id = numEntities;
+        numEntities++;
+    }
+
     public void setPosition(int x, int y){
         position[0] = x;
         position[1] = y;

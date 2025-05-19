@@ -72,17 +72,7 @@ public class Board {
         }else {
             bits = val >> 3;
         }
-        if(bits == Board.Player){
-            return Board.Player;
-        } if(bits == Board.Enemy){
-            return Board.Enemy;
-        } if(bits == Board.Wall){
-            return Board.Wall;
-        } if(bits == Board.Upgrade){
-            return Board.Upgrade;
-        }
-
-        return 0;
+        return bits;
     }
 
     public int randomUpgrade(){
@@ -134,13 +124,12 @@ public class Board {
             for(int x = 0; x < board[0].length; x++){
                 int val = getAtPos(x, y);
                 if(val == Board.Player){
-                    System.out.print("☺|");
+                    System.out.print("@|");
                 }else if(val == Board.Enemy){
                     System.out.print("E|");
                 }else if(val == Board.Upgrade){
                     System.out.print("U|");
                 }else if(val == Board.Wall){
-                    int str = board[x][y] >> 3;
                     System.out.print("█|");
                 }else{
                     System.out.print("_|");
@@ -159,8 +148,6 @@ public class Board {
                  * TODO IMPLEMENT SHOOTING LOGIC
                  */
             }else{
-                
-                
                 int[] currentPos = p.getPosition();
                 int x = currentPos[0];
                 int y = currentPos[1];
@@ -168,8 +155,6 @@ public class Board {
                     p.absorbUpgrade(board[x][y] >> 3);
                 }
                 board[x][y] = 0;
-                System.out.println(x + " + " + m.getDX());
-                System.out.println(y + " + " + m.getDY());
                 x += m.getDX();
                 y += m.getDY();
                 board[x][y] = Board.Player;
@@ -194,13 +179,13 @@ public class Board {
                             }
                         }else{
                             if(m.getDX() > 0){
-                                for(int n = 0; n < m.getDX(); n++){
-                                    int x = e.getPosition()[0] + 1 + n;
+                                for(int n = 1; n < m.getDX() - 1; n++){
+                                    int x = e.getPosition()[0] + n;
                                     board[x][e.getPosition()[1]] = Board.Wall;
                                 }
                             }else{
-                                for(int n = 0; n > m.getDX(); n--){
-                                    int x = e.getPosition()[0] + 1 + n;
+                                for(int n = 1; n > m.getDX() - 1; n--){
+                                    int x = e.getPosition()[0] + n;
                                     board[x][e.getPosition()[1]] = Board.Wall << 3 | e.getStrength();
                                 }
                             }

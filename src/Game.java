@@ -119,15 +119,17 @@ public class Game {
         if(choice == 2){
             System.out.println("Type your move");
             boolean validMove = false;
+            scan.nextLine();
             String candidate = scan.nextLine();
             for(Move m: moves){
-                    if(!m.isShoot && m.toString().equals(candidate)){
+                    if(!m.getIsShoot() && m.toString().equals(candidate)){
                         board.applyMove(m, true);
                         validMove = true;
                         break;
                 }
             }
             if(!validMove){
+                System.out.println("Please select a valid move :)");
                 playerTurn();
             }
         }
@@ -140,16 +142,18 @@ public class Game {
         if(choice == 2){
             System.out.println("Type your move");
             boolean validMove = false;
-                String candidate = scan.nextLine();
-                for(Move m: moves){
-                    if(!m.isShoot && m.toString().equals(candidate)){
-                        board.applyMove(m, true);
-                        validMove = true;
-                        break;
-                    }
-                if(!validMove){
-                    playerTurn();
+            scan.nextLine();
+            String candidate = scan.nextLine();
+            for(Move m: moves){
+                if(!m.getIsShoot() && m.toString().equals(candidate)){
+                    board.applyMove(m, true);
+                    validMove = true;
+                    break;
                 }
+            }
+            if(!validMove){
+                System.out.println("Please select a valid move :)");
+                playerTurn();
             }
         }else if(choice == 1){
            
