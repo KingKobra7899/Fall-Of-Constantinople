@@ -291,10 +291,14 @@ public class Board {
         return enemies;
     }
 
-    public int evaluateBoard(){
-        int playerMoves = getEntityMoves(p).size();
-        int[] playerLoc = p.getPosition();
-        int playerDist = (int) Math.sqrt(Math.pow(playerLoc[1], 2) );
-        return 0;
+    public int[] squishBoard(){
+        int[] out = new int[(int) board.length * board.length]; 
+        for(int x = 0; x < board.length; x++){
+            for(int y = 0; y < board[x].length; y++){
+                out[x + y * board[x].length] = board[x][y];
+            }
+        }
+        return out;
     }
+
 }
