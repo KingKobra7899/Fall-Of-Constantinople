@@ -11,7 +11,7 @@ public class Game {
 
 
     public Game() {
-        Assets.printTitle();
+        Assets.printFile("title.txt");
         scan = new Scanner(System.in).useLocale(Locale.US);
         System.out.println("Choose your difficulty");
         System.out.println("1. Kolay (Easy)");
@@ -45,7 +45,7 @@ public class Game {
         while(!charSelected){
             int type = scan.nextInt();
             if(type==3){
-                Assets.printInfrantry();
+                Assets.printFile("infantry.txt");
                 System.out.println("____________________");
                 System.out.println("|Speed    |███     |");
                 System.out.println("|Range    |███     |");
@@ -63,7 +63,7 @@ public class Game {
                     System.out.println("3. Yeŋiçeri (Infantry)");
                 }
             }else if(type == 1){
-                Assets.printCavalry();
+                Assets.printFile("cavalry.txt");
                 System.out.println("____________________");
                 System.out.println("|Speed    |█████   |");
                 System.out.println("|Range    |██      |");
@@ -81,7 +81,7 @@ public class Game {
                     System.out.println("3. Yeŋiçeri (Infantry)");
                 }
             }else if(type == 2){
-                Assets.printCannon();
+                Assets.printFile("cannon.txt");;
                 System.out.println("____________________");
                 System.out.println("|Speed    |██      |");
                 System.out.println("|Range    |███     |");
@@ -104,11 +104,27 @@ public class Game {
         board.printBoard();
     }
 
-    public void Run(){
+    public int Run(boolean player){
+        int score = 0;
         while(!gameOver){
-            Turn();
+            Turn(player);
             board.printBoard();
+            if(board.getAtPos(board.getBoard().length, 0) == Board.Player){
+                score = 100;
+                if(player){
+
+                }
+                break;
+            }
+            if(board.getEntityMoves(board.getPlayer()).size() == 0){
+                score = -100;
+                if(player){
+
+                }
+                break;
+            }
         }
+        return 0;
     }
 
     public void playerTurn(){
@@ -135,7 +151,8 @@ public class Game {
         }
     }
 
-    public void Turn(){
+    public void Turn(boolean isPlayer){
+        if(isPlayer){
         System.out.println("\nShoot (1) or Move (2) or View Stats (3)?");
         ArrayList<Move> moves = board.getEntityMoves(board.getPlayer());
         int choice = scan.nextInt();
@@ -162,7 +179,11 @@ public class Game {
             playerTurn();
         }
         for(Enemy e: board.getEnemies()){
-            board.applyMove(e.chooseMove(board), false);
+            if(board.getEntityMoves(e).size() > 0)
+                board.applyMove(e.chooseMove(board), false);
         }
+    }else{
+
+    }
     }
 }

@@ -29,9 +29,8 @@ public class NeuralNetwork {
 
     public Move chooseMove(int[] board, ArrayList<Move> legalMoves){
         double[] choice = calculateOutput(Arrays.stream(board).asDoubleStream().toArray());
-        double maxSim = -1;
+        double maxSim = -10000000000.0;
         int indexMax = -1;
-        
         for(int i = 0; i < legalMoves.size(); i++){
             double[] vec = legalMoves.get(i).Vector();
             double sim = Misc.calculateSimilarity(vec, choice);
@@ -40,7 +39,7 @@ public class NeuralNetwork {
                 indexMax = i;
             }
         }
-        
+        indexMax = Math.max(indexMax, 0);
         return legalMoves.get(indexMax);
     }
 

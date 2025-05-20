@@ -34,7 +34,7 @@ public class Board {
                 for(int y = 0; y < size; y++){
                     if(Math.random() < 0.01){
                         board[x][y] = Board.Enemy;
-                        Enemy e = new Enemy();
+                        Enemy e = new Enemy(this);
                         e.setPosition(x, y);
                         enemies.add(e);
                         numEnemies++;
@@ -186,7 +186,7 @@ public class Board {
                             }else{
                                 for(int n = 1; n > m.getDX() - 1; n--){
                                     int x = e.getPosition()[0] + n;
-                                    board[x][e.getPosition()[1]] = Board.Wall << 3 | e.getStrength();
+                                    board[x][e.getPosition()[1]] = Board.Wall;
                                 }
                             }
                         }
@@ -301,4 +301,14 @@ public class Board {
         return out;
     }
 
+
+    public double evaluate(){
+        int numMoves = getEntityMoves(p).size();
+        double dist = Math.sqrt(Math.pow(p.getPosition()[0], 2) + Math.pow(p.getPosition()[1] - board.length, 2)) / board.length;
+        return dist / (numMoves / 10);
+    }
+
+    public int[][] getBoard(){
+        return board;
+    }
 }

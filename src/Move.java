@@ -33,8 +33,8 @@ public class Move {
     public double[] Vector(){
         double[] vector = new double[3];
         vector[0] = isShoot ? 1 : 0;
-        vector[1] = dX;
-        vector[2] = dY;
+        vector[1] = dX / 3;
+        vector[2] = dY / 3;
 
         return vector;
     }

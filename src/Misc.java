@@ -1,8 +1,9 @@
+import java.util.Random;
+
 public class Misc{
     static double ReLU(double input){
         return Math.max(0, input);
     }
-
     static double calculateSimilarity(double[] v1, double[] v2){
         int dp = 0;
         
@@ -19,17 +20,19 @@ public class Misc{
 
     static double[] genRandomArray(int len){
         double[] out = new double[len];
+        Random r = new Random();
         for(int i = 0; i < out.length; i++){
-            out[i] = 2 * (Math.random() - 0.5);
+            out[i] = r.nextGaussian() * 5;
         }
         return out;
     }
 
     static double[][] genRandomArray(int row, int col){
         double[][] out = new double[row][col];
+        Random r = new Random();
         for(int i = 0; i < out.length; i++){
                 for(int o  = 0; o < out[0].length; o++){
-                    out[i][o] = 2 * (Math.random() - 0.5);
+                    out[i][o] = r.nextGaussian() * 5;
                 }
             }
         return out;

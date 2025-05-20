@@ -43,7 +43,7 @@ public class Layer {
                 out += input[nodeIn] * weights[nodeIn][nodeOut];
             }
             
-            output[nodeOut] = Misc.ReLU(out);
+            output[nodeOut] = out;
         }
         return output;
     }
