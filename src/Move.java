@@ -30,8 +30,8 @@ public class Move {
         return m.getIsShoot() == isShoot && m.getDX() == dX && m.getDY() == dY && entity.getId() == m.getEntity().getId();
     }
 
-    public int[] Vector(){
-        int[] vector = new int[3];
+    public double[] Vector(){
+        double[] vector = new double[3];
         vector[0] = isShoot ? 1 : 0;
         vector[1] = dX;
         vector[2] = dY;
