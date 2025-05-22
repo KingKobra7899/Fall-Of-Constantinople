@@ -11,8 +11,13 @@ public class NeuralNetwork {
     int[] arch;
     public NeuralNetwork(int... layerSizes){
         arch = layerSizes;
-        for(int i = 0; i < layerSizes.length - 1; i++){
-            Layer l = new Layer(layerSizes[i], layerSizes[i + 1]);
+        for (int i = 0; i < layerSizes.length - 1; i++) {
+            Layer l;
+            if(i < layerSizes.length - 2)
+                l = new Layer(layerSizes[i], layerSizes[i + 1], false);
+            else{
+                l = new Layer(layerSizes[i], layerSizes[i + 1], true);
+            }
             l.setBiases(Misc.genRandomArray(layerSizes[i + 1]));
             l.setWeights(Misc.genRandomArray(layerSizes[i], layerSizes[i + 1]));
             layers.add(l);

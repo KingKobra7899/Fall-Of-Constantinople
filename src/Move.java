@@ -33,24 +33,26 @@ public class Move {
     public double[] Vector(){
         double[] vector = new double[3];
         vector[0] = isShoot ? 1 : 0;
-        vector[1] = dX / 3;
-        vector[2] = dY / 3;
+        vector[1] = dX;
+        vector[2] = dY;
 
         return vector;
     }
 
     public String toString(){
+        String prefix = isShoot ? "S" : "M";
+
         if(dX == 0){
             if(dY > 0){
-                return "S" + dY;
+                return prefix + "S" + dY;
             }else{
-                return "N" + Math.abs(dY);
+                return prefix + "N" + Math.abs(dY);
             }
         }else{
             if(dX > 0){
-                return "E" + dX;
+                return prefix + "E" + dX;
             }else{
-                return "W" + Math.abs(dX);
+                return prefix + "W" + Math.abs(dX);
             }
         }
     }

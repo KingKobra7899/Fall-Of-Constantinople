@@ -10,6 +10,7 @@ public class Assets {
             while(scan.hasNextLine()){
                 System.out.println(scan.nextLine());
             }
+            scan.close();
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

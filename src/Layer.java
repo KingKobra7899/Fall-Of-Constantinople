@@ -4,13 +4,15 @@ public class Layer {
     int inputLen, outputLen;
     double[] biases;
     double[][] weights;
+    boolean isOutput;
 
-    public Layer(int nodesIn, int nodesOut){
+    public Layer(int nodesIn, int nodesOut, boolean isOutput){
         inputLen = nodesIn;
         outputLen = nodesOut;
 
         weights = new double[inputLen][outputLen];
         biases = new double[outputLen];
+        this.isOutput = isOutput;
     }
 
     void mutate(double degree){
@@ -42,8 +44,11 @@ public class Layer {
             for(int nodeIn = 0; nodeIn < inputLen; nodeIn++){
                 out += input[nodeIn] * weights[nodeIn][nodeOut];
             }
-            
-            output[nodeOut] = out;
+            if(isOutput)
+                output[nodeOut] = out;
+            else{
+                output[nodeOut] = Misc.ReLU(out);
+            }
         }
         return output;
     }
