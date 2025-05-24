@@ -9,7 +9,7 @@ public class Game {
     int difficulty;
 
 
-    public Game(boolean isAuto) {
+    public Game(boolean isAuto, NeuralNetwork B) {
         if(!isAuto){
             Assets.printFile("/Users/K-Dog/IdeaProjects/Game/src/title.txt");
             scan = new Scanner(System.in).useLocale(Locale.US);
@@ -23,13 +23,13 @@ public class Game {
             while(!difficultyChosen){
                 difficulty = scan.nextInt();
                 if (difficulty == 1) {
-                    board = new Board(16, difficulty);
+                    board = new Board(16, difficulty, B);
                     difficultyChosen = true;
                 } else if (difficulty == 2) {
-                    board = new Board(16, difficulty);
+                    board = new Board(16, difficulty, B);
                     difficultyChosen = true;
                 } else if (difficulty == 3) {
-                    board = new Board(16, difficulty);
+                    board = new Board(16, difficulty, B);
                     difficultyChosen = true;
                 } else{
                     System.out.println("Please choose a valid difficulty");
@@ -107,11 +107,11 @@ public class Game {
             }else{
                 double prob = Math.random();
                 if (prob < 0.33) {
-                    board = new Board(16, 1);
+                    board = new Board(16, 1, B);
                 } else if(prob > 0.66) {
-                    board = new Board(16, 2);
+                    board = new Board(16, 2, B);
                 } else {
-                    board = new Board(16, 3);
+                    board = new Board(16, 3, B);
                 }
 
                 prob = Math.random();
@@ -125,21 +125,49 @@ public class Game {
             }
     }
 
-    public void Run(boolean isSim){
-        while(true){
+    public double[] Run(boolean isSim) {
+        double[] score = new double[2];
+        score[0] = 0;
+        boolean over = false;
+        int i = 0;
+        while (!over) {
+            i++;
+            if (i > 100) {
+                score[1] = 0;
+                break;
+            }
+            if (board.p.getPosition()[0] == 15 && board.p.getPosition()[1] == 0) {
+                if(!isSim)
+                    Assets.printFile("/Users/K-Dog/IdeaProjects/Game/src/win.txt");
+                score[1] = 1000;
+                over = true;
+                return score;
+            } else if (board.getEntityMoves(board.p).size() == 0) {
+                if(!isSim)
+                    Assets.printFile("/Users/K-Dog/IdeaProjects/Game/src/lose.txt");
+                score[1] = 1000;
+                over = true;
+                return score;
+            }
             Turn(isSim);
+            score[0] += board.evaluate();
         }
+        return score;
     }
 
     public void Turn(boolean isAuto){
         if (isAuto) {
-            
+            board.makeMove(board.p.chooseMove(board));
+            for (Enemy e : board.getEnemies()) {
+                Move m = e.chooseMove(board);
+                board.makeMove(m);
+            }
         } else {
             boolean correct = false;
             while (!correct) {
                 String choice = scan.nextLine();
                 for (Move m : board.getEntityMoves(board.getPlayer())) {
-                    if (m.toString().equals(choice)) {
+                    if (m.toString().equalsIgnoreCase(choice)) {
                         board.makeMove(m);
                         correct = true;
                         break;
@@ -147,7 +175,8 @@ public class Game {
                 }
             }
             for (Enemy e : board.getEnemies()) {
-                board.makeMove(e.chooseMove(board));
+                Move m = e.chooseMove(board);
+                board.makeMove(m);
             }
             board.printBoard();
         }

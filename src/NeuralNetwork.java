@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class NeuralNetwork {
+public class NeuralNetwork implements Cloneable{
     ArrayList<Layer> layers = new ArrayList<Layer>();
     int[] arch;
     public NeuralNetwork(int... layerSizes){

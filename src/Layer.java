@@ -44,11 +44,7 @@ public class Layer {
             for(int nodeIn = 0; nodeIn < inputLen; nodeIn++){
                 out += input[nodeIn] * weights[nodeIn][nodeOut];
             }
-            if(isOutput)
-                output[nodeOut] = out;
-            else{
-                output[nodeOut] = Misc.ReLU(out);
-            }
+            output[nodeOut] = out;
         }
         return output;
     }

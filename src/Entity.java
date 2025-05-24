@@ -121,20 +121,25 @@ public class Entity extends Thing{
         }
     }
 
-    public void absorbUpgrade(int upgrade){
-        
-        //print();
-        if(upgrade % 2 == 0){
+    public void absorbUpgrade(int upgrade) {
+
+        print();
+        if (upgrade % 2 == 0) {
             speed++;
         }
         upgrade /= 2;
-        if(upgrade % 2 == 0){
+        if (upgrade % 2 == 0) {
             range++;
         }
         upgrade /= 2;
-        if(upgrade % 2 == 0){
+        if (upgrade % 2 == 0) {
             strength++;
         }
-        //print();
+        print();
+    }
+    
+    @Override
+    public Entity copy() {
+        return new Entity(speed, range, strength, position);
     }
 }
